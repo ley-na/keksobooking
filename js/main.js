@@ -36,7 +36,7 @@ var getRandomElement = function (items) {
 // Перемешивание массива
 var shuffleItems = function (items) {
   var itemsClone = items.slice();
-  for (var i =  0; i < itemsClone.length; i++) {
+  for (var i = 0; i < itemsClone.length; i++) {
     var swapIndex = getRandomNumber(0, items.length - 1);
 
     var currentItem = itemsClone[i];
