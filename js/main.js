@@ -24,6 +24,14 @@ var LOCATION_X_MIN = 0;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
 
+// Типы жилья
+var roomTypes = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalo: 'Бунгало'
+};
+
 var locationXMax = document.querySelector('.map').offsetWidth;
 
 var map = document.querySelector('.map');
@@ -148,96 +156,55 @@ var renderPhotos = function (container, photos) {
   });
 };
 
-// Типы жилья
-var roomTypes = {
-  palace: 'Дворец',
-  flat: 'Квартира',
-  house: 'Дом',
-  bungalo: 'Бунгало'
-};
-
-// Подбор окончаний у комнат
-var switchRooms = function (digit) {
-  switch (digit) {
-    case 1:
-      return digit + ' комната';
-    case 2:
-    case 3:
-    case 4:
-      return digit + ' комнаты';
-    default:
-      return digit + ' комнат';
-  }
-};
-
-// Подбор окончаний у гостей
-var switchGuests = function (digit) {
-  switch (digit) {
-    case 1:
-      return digit + ' гостя';
-    default:
-      return digit + ' гостей';
-  }
-};
-
 // Функция добавляения элемента в карточку при наличии
-var addCardElementStyle = function (offerElement, selector) {
-  if (offerElement) {
-    offerCardElements.querySelector(selector).textContent = offerElement;
+var addFieldToCardElement = function (value, selector, suffix) {
+  if (value) {
+    offerCardElements.querySelector(selector).textContent = value + suffix;
   } else {
     hideOfferCardElement(selector);
   }
 };
 
 // Функция добавляения элемента в карточку при наличии с массивом
-var addCardElementsArray = function (offerElement, container, renderFunction) {
-  if (offerElement) {
-    renderFunction(container, offerElement);
+var addCardElementsArray = function (value, container, renderFunction) {
+  if (value.length > 0) {
+    renderFunction(container, value);
   } else {
-    container.style.display = 'none';
-  }
-};
-
-// Функция добавления цены
-var addCardElementPrice = function (offerElement, selector) {
-  if (offerElement) {
-    offerCardElements.querySelector(selector).textContent = offerElement + '₽/ночь';
-  } else {
-    hideOfferCardElement(selector);
+    container.classList.add('hidden');
   }
 };
 
 // Функция добавления комнат и гостей
-var addCardElementCapacity = function (offerElementRooms, offerElementGuests, selector) {
-  if (offerElementRooms && offerElementGuests) {
-    offerCardElements.querySelector(selector).textContent = switchRooms(offerElementRooms) + ' для ' + switchGuests(offerElementGuests);
+var addCardElementCapacity = function (valueRooms, valueGuests, selector) {
+  if (valueRooms && valueGuests) {
+    offerCardElements.querySelector(selector).textContent = valueRooms + ' комнат для ' + valueGuests + ' гостей';
   } else {
     hideOfferCardElement(selector);
   }
 };
 
 // Функция добавления аватара
-var addCardElementAvatar = function (offerElement, selector) {
-  if (offerElement) {
-    offerCardElements.querySelector(selector).src = offerElement;
+var addCardElementAvatar = function (value, selector) {
+  if (value) {
+    offerCardElements.querySelector(selector).src = value;
   } else {
     hideOfferCardElement(selector);
   }
 };
 
 // Функция добавления типа жилья
-var addCardElementType = function (offerElement, selector) {
-  if (offerElement) {
-    offerCardElements.querySelector(selector).textContent = roomTypes[offerElement];
+var addCardElementType = function (value, selector) {
+  if (value) {
+    offerCardElements.querySelector(selector).textContent = roomTypes[value];
   } else {
     hideOfferCardElement(selector);
   }
 };
 
 // Функция добавления времени
-var addCardElementTimes = function (offerElementCheckin, offerElementCheckOut, selector) {
-  if (offerElementCheckin && offerElementCheckOut) {
-    offerCardElements.querySelector(selector).textContent = 'Заезд после ' + offerElementCheckin + ', выезд до ' + offerElementCheckOut;
+var addCardElementTimes = function (valueCheckin, valueCheckOut, selector) {
+  if (valueCheckin && valueCheckOut) {
+    offerCardElements.querySelector(selector).textContent = 'Заезд после ' + valueCheckin + ', выезд до ' + valueCheckOut;
   } else {
     hideOfferCardElement(selector);
   }
@@ -245,16 +212,15 @@ var addCardElementTimes = function (offerElementCheckin, offerElementCheckOut, s
 
 // Функция скрытия элемента
 var hideOfferCardElement = function (selector) {
-  offerCardElements.querySelector(selector).style.display = 'none';
+  offerCardElements.querySelector(selector).classList.add('hidden');
 };
 
 // Генерирование карточки объявления
 var renderOfferCard = function (offerCard) {
-
-  addCardElementStyle(offerCard.offer.title, '.popup__title');
-  addCardElementStyle(offerCard.offer.address, '.popup__text--address');
-  addCardElementStyle(offerCard.offer.description, '.popup__description');
-  addCardElementPrice(offerCard.offer.price, '.popup__text--price');
+  addFieldToCardElement(offerCard.offer.title, '.popup__title', '');
+  addFieldToCardElement(offerCard.offer.address, '.popup__text--address', '');
+  addFieldToCardElement(offerCard.offer.description, '.popup__description', '');
+  addFieldToCardElement(offerCard.offer.price, '.popup__text--price', '₽/ночь');
   addCardElementType(offerCard.offer.type, '.popup__type');
 
   addCardElementsArray(offerCard.offer.features, offerCardFeatures, renderFeatures);
