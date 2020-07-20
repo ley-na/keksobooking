@@ -51,7 +51,7 @@ var filtersForm = document.querySelector('.map__filters');
 var addressInput = adForm.querySelector('input[name="address"]');
 var titleInput = adForm.querySelector('input[name="title"]');
 
-var typeSelect = adForm.querySelector('input[name="type"]');
+var typeSelect = adForm.querySelector('select[name="type"]');
 var priceInput = adForm.querySelector('input[name="price"]');
 var checkinSelect = adForm.querySelector('select[name="timein"]');
 var checkoutSelect = adForm.querySelector('select[name="timeout"]');
@@ -331,7 +331,7 @@ var disablePage = function () {
   insertDefaultAddressDisabled();
   disableFormElements(adFormFieldsets);
   disableFormElements(filtersFormElements);
-  mainPin.addEventListener('keydown', onPinPress);
+  document.addEventListener('keydown', onPinPress);
   mainPin.addEventListener('mousedown', onPinMousedown);
   clearPins();
 };
@@ -344,7 +344,7 @@ var enablePage = function () {
   renderOfferPins(offers);
   enableFormElements(adFormFieldsets);
   enableFormElements(filtersFormElements);
-  mainPin.removeEventListener('keydown', onPinPress);
+  document.removeEventListener('keydown', onPinPress);
   mainPin.removeEventListener('mousedown', onPinMousedown);
 };
 
@@ -365,7 +365,7 @@ titleInput.addEventListener('input', function () {
   if (titleInput.validity.tooShort) {
     titleInput.setCustomValidity('Название слишком короткое. Введите не меньше 30 символов');
   } else if (titleInput.validity.tooLong) {
-    titleInput.setCustomValidity('Название сдишком длинное. Введите не больше 100 символов');
+    titleInput.setCustomValidity('Название слишком длинное. Введите не больше 100 символов');
   } else if (titleInput.validity.valueMissing) {
     titleInput.setCustomValidity('Добавьте заголовок вашему объявлению');
   } else {
@@ -402,8 +402,8 @@ var priceRoomCompliance = {
 };
 
 var validatePrice = function () {
-  priceInput.min = priceRoomCompliance[(typeSelect.placeholder)];
-  priceInput.value = priceRoomCompliance[(typeSelect.placeholder)];
+  priceInput.min = priceRoomCompliance[(typeSelect.value)];
+  priceInput.placeholder = priceRoomCompliance[(typeSelect.value)];
 };
 
 var validateRooms = function () {
@@ -417,8 +417,16 @@ var validateRooms = function () {
   }
 };
 
+var onRoomChange = function () {
+  validateRooms();
+};
+
 var onCapacityChange = function () {
   validateRooms();
+};
+
+var onTypeChange = function () {
+  validatePrice();
 };
 
 var onCheckInChange = function () {
@@ -430,9 +438,10 @@ var onCheckOutChange = function () {
 };
 
 capacitySelect.addEventListener('change', onCapacityChange);
-roomsSelect.addEventListener('change', onCapacityChange);
+roomsSelect.addEventListener('change', onRoomChange);
 checkinSelect.addEventListener('change', onCheckInChange);
 checkoutSelect.addEventListener('change', onCheckOutChange);
+typeSelect.addEventListener('change', onTypeChange);
 
 var offers = generateOffers(OFFERS_NUMBER);
 
