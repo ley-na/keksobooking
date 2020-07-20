@@ -140,13 +140,13 @@ var renderOfferPin = function (offerPin) {
 
   var openOfferCard = function () {
     renderOfferCard(offerPin);
-    offerCardElements.style.display = 'block';
+    offerCardElements.classList.remove('hidden');
 
     document.addEventListener('keydown', onCardEscPress);
   };
 
   var closeOfferCard = function () {
-    offerCardElements.style.display = 'none';
+    offerCardElements.classList.add('hidden');
 
     document.removeEventListener('keydown', onCardEscPress);
   };
@@ -402,8 +402,8 @@ var priceRoomCompliance = {
 };
 
 var validatePrice = function () {
-  priceInput.min = priceRoomCompliance[(typeSelect.value)];
-  priceInput.value = priceRoomCompliance[(typeSelect.value)];
+  priceInput.min = priceRoomCompliance[(typeSelect.placeholder)];
+  priceInput.value = priceRoomCompliance[(typeSelect.placeholder)];
 };
 
 var validateRooms = function () {
@@ -421,18 +421,18 @@ var onCapacityChange = function () {
   validateRooms();
 };
 
-var onCheckinChange = function () {
+var onCheckInChange = function () {
   checkoutSelect.value = checkinSelect.value;
 };
 
-var onCheckoutChange = function () {
+var onCheckOutChange = function () {
   checkinSelect.value = checkoutSelect.value;
 };
 
 capacitySelect.addEventListener('change', onCapacityChange);
 roomsSelect.addEventListener('change', onCapacityChange);
-checkinSelect.addEventListener('change', onCheckinChange);
-checkoutSelect.addEventListener('change', onCheckoutChange);
+checkinSelect.addEventListener('change', onCheckInChange);
+checkoutSelect.addEventListener('change', onCheckOutChange);
 
 var offers = generateOffers(OFFERS_NUMBER);
 
