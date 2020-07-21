@@ -39,7 +39,7 @@
     };
 
     var offerCardToggle = function () {
-      var closeButton = window.card.offerCardElements.querySelector('.popup__close');
+      var closeButton = window.card.elements.querySelector('.popup__close');
 
       closeButton.addEventListener('click', function () {
         closeOfferCard();

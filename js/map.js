@@ -8,7 +8,7 @@
     window.form.insertDefaultAddressDisabled();
     window.form.disableElements(window.form.adFieldsets);
     window.form.disableElements(window.form.filterElements);
-    window.form.document.addEventListener('keydown', onPinPress);
+    document.addEventListener('keydown', onPinPress);
     window.form.mainPin.addEventListener('mousedown', onPinMousedown);
     window.pin.clear();
   };
@@ -21,7 +21,7 @@
     window.pin.render(offers);
     window.form.enableElements(window.form.adFieldsets);
     window.form.enableElements(window.form.filterElements);
-    window.form.document.removeEventListener('keydown', onPinPress);
+    document.removeEventListener('keydown', onPinPress);
     window.form.mainPin.removeEventListener('mousedown', onPinMousedown);
   };
 
