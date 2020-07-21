@@ -26,14 +26,14 @@
     };
 
     var openOfferCard = function () {
-      window.card.renderOfferCard(offerPin);
-      window.card.offerCardElements.classList.remove('hidden');
+      window.card.render(offerPin);
+      window.card.elements.classList.remove('hidden');
 
       document.addEventListener('keydown', onCardEscPress);
     };
 
     var closeOfferCard = function () {
-      window.card.offerCardElements.classList.add('hidden');
+      window.card.elements.classList.add('hidden');
 
       document.removeEventListener('keydown', onCardEscPress);
     };
