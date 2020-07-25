@@ -20,14 +20,14 @@
   var capacitySelect = adForm.querySelector('select[name="capacity"]');
 
   // Вычисление адреса на формы
-  var insertDefaultAddressDisabled = function () {
+  var setAddressDisabled = function () {
     var coordinateX = Math.round(mainPin.offsetLeft + MAIN_PIN_WIDTH / 2);
     var coordinateY = Math.round(mainPin.offsetTop + MAIN_PIN_HEIGHT / 2);
 
     addressInput.value = coordinateX + ', ' + coordinateY;
   };
 
-  var insertDefaultAddressEnabled = function () {
+  var setAddressEnabled = function () {
     var coordinateX = Math.round(mainPin.offsetLeft + MAIN_PIN_WIDTH / 2);
     var coordinateY = Math.round(mainPin.offsetTop + MAIN_PIN_ACTIVE_HEIGHT);
 
@@ -134,8 +134,8 @@
   typeSelect.addEventListener('change', onTypeChange);
 
   window.form = {
-    insertDefaultAddressDisabled: insertDefaultAddressDisabled,
-    insertDefaultAddressEnabled: insertDefaultAddressEnabled,
+    setAddressDisabled: setAddressDisabled,
+    setAddressEnabled: setAddressEnabled,
     adFieldsets: adFormFieldsets,
     filterElements: filtersFormElements,
     ad: adForm,
@@ -143,6 +143,8 @@
     enableElements: enableFormElements,
     validateRooms: validateRooms,
     validatePrice: validatePrice,
-    mainPin: mainPin
+    mainPin: mainPin,
+    pinWidth: MAIN_PIN_WIDTH,
+    pinActiveHeight: MAIN_PIN_ACTIVE_HEIGHT
   };
 })();
