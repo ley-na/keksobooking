@@ -45,7 +45,7 @@
         window.form.mainPin.style.top = (window.form.mainPin.offsetTop - shift.y) + 'px';
       }
 
-      window.form.insertDefaultAddressEnabled();
+      window.form.setAddressEnabled();
     };
 
     var onMouseUp = function () {

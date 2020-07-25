@@ -5,7 +5,7 @@
 
   // Спрятать карту
   var disablePage = function () {
-    window.form.insertDefaultAddressDisabled();
+    window.form.setAddressDisabled();
     window.form.disableElements(window.form.adFieldsets);
     window.form.disableElements(window.form.filterElements);
     document.addEventListener('keydown', onPinPress);
@@ -17,7 +17,7 @@
   var enablePage = function () {
     window.pin.map.classList.remove('map--faded');
     window.form.ad.classList.remove('ad-form--disabled');
-    window.form.insertDefaultAddressEnabled();
+    window.form.setAddressEnabled();
     window.pin.render(offers);
     window.form.enableElements(window.form.adFieldsets);
     window.form.enableElements(window.form.filterElements);
