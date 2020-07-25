@@ -143,6 +143,8 @@
     enableElements: enableFormElements,
     validateRooms: validateRooms,
     validatePrice: validatePrice,
-    mainPin: mainPin
+    mainPin: mainPin,
+    pinWidth: MAIN_PIN_WIDTH,
+    pinActiveHeight: MAIN_PIN_ACTIVE_HEIGHT
   };
 })();

@@ -93,6 +93,10 @@
     generateOffers: generateOffers,
     renderFeatures: renderFeatures,
     renderPhotos: renderPhotos,
-    roomTypes: roomTypes
+    roomTypes: roomTypes,
+    locationYMin: LOCATION_Y_MIN,
+    locationYMax: LOCATION_Y_MAX,
+    loactionXMin: LOCATION_X_MIN,
+    locationXMax: locationXMax
   };
 })();
