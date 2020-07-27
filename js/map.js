@@ -26,8 +26,8 @@
     window.backend.load(onSuccessLoad, onErrorLoad);
   };
 
-  var onPinPress = function (evt) {
-    if (evt.key === 'Enter') {
+  var onPinPress = function () {
+    if (window.utils.isEscPressed) {
       enablePage();
     }
   };
@@ -39,14 +39,14 @@
   };
 
   var onErrorEscPress = function (evt) {
-    if (evt.key === 'Escape') {
+    if (window.utils.isEscPressed) {
       evt.preventDefault();
       closeError();
     }
   };
 
   var onErrorClick = function (evt) {
-    if (evt.target === document.querySelector('div.error')) {
+    if (evt.target === document.querySelector('.error')) {
       evt.preventDefault();
       closeError();
     }

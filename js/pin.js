@@ -19,7 +19,7 @@
     offerPinElement.style.top = offerPin.location.y - PIN_HEIGHT + 'px';
 
     var onCardEscPress = function (evt) {
-      if (evt.key === 'Escape') {
+      if (window.utils.isEscPressed) {
         evt.preventDefault();
         closeOfferCard();
       }
@@ -49,8 +49,8 @@
         openOfferCard();
       });
 
-      offerPinElement.addEventListener('keydown', function (evt) {
-        if (evt.key === 'Enter') {
+      offerPinElement.addEventListener('keydown', function () {
+        if (window.utils.isEnterPressed) {
           openOfferCard();
         }
       });

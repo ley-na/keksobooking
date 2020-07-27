@@ -2,13 +2,15 @@
 
 (function () {
   var URL_GET = 'https://javascript.pages.academy/keksobooking/data';
+  var ERROR_CODE = 200;
+  var RESPONSE_TYPE = 'json';
 
   var createXHR = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
+    xhr.responseType = RESPONSE_TYPE;
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === ERROR_CODE) {
         onLoad(xhr.response);
       } else {
         onError('Произошла ошибка' + xhr.status);
