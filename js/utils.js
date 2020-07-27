@@ -1,6 +1,18 @@
 'use strict';
 
 (function () {
+  var ENTER_KEYCODE = 13;
+  var ESC_KEYCODE = 27;
+
+  // Проверка клавиш
+  var isEscPressed = function (evt) {
+    return evt.keyCode === ESC_KEYCODE;
+  };
+
+  var isEnterPressed = function (evt) {
+    return evt.keyCode === ENTER_KEYCODE;
+  };
+
   // Получение случайного числа и элемента
   var getRandomNumber = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -31,6 +43,8 @@
   window.utils = {
     getRandomNumber: getRandomNumber,
     getRandomElement: getRandomElement,
-    shuffleAndSliceItems: shuffleAndSliceItems
+    shuffleAndSliceItems: shuffleAndSliceItems,
+    isEnterPressed: isEnterPressed,
+    isEscPressed: isEscPressed
   };
 })();
