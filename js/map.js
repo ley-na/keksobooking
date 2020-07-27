@@ -35,8 +35,8 @@
     window.backend.load(onSuccessLoad, onErrorLoad);
   };
 
-  var onPinPress = function () {
-    if (window.utils.isEscPressed) {
+  var onPinPress = function (evt) {
+    if (window.utils.isEnterPressed(evt)) {
       enablePage();
     }
   };
@@ -48,7 +48,7 @@
   };
 
   var onErrorEscPress = function (evt) {
-    if (window.utils.isEscPressed) {
+    if (window.utils.isEscPressed(evt)) {
       evt.preventDefault();
       closeError();
     }
@@ -88,7 +88,7 @@
 
   // Сообщение успеха
   var onSuccessEscPress = function (evt) {
-    if (evt.key === 'Escape') {
+    if (window.utils.isEscPressed(evt)) {
       evt.preventDefault();
       closeSuccess();
     }

@@ -18,7 +18,7 @@
     offerPinElement.style.top = offerPin.location.y - PIN_HEIGHT + 'px';
 
     var onCardEscPress = function (evt) {
-      if (window.utils.isEscPressed) {
+      if (window.utils.isEscPressed(evt)) {
         evt.preventDefault();
         closeOfferCard();
       }
@@ -48,8 +48,8 @@
         openOfferCard();
       });
 
-      offerPinElement.addEventListener('keydown', function () {
-        if (window.utils.isEnterPressed) {
+      offerPinElement.addEventListener('keydown', function (evt) {
+        if (window.utils.isEnterPressed(evt)) {
           openOfferCard();
         }
       });
