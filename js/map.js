@@ -2,22 +2,31 @@
 
 (function () {
 
+  var resetFormButton = window.form.ad.querySelector('.ad-form__reset');
   var errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
+  var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
 
   // Спрятать карту
   var disablePage = function () {
-    window.form.setAddressDisabled();
+    window.pin.map.classList.add('map--faded');
+    window.form.ad.classList.add('ad-form--disabled');
+    window.form.filters.classList.add('hidden');
+    window.pin.clear();
     window.form.disableElements(window.form.adFieldsets);
     window.form.disableElements(window.form.filterElements);
+    window.pin.setDefaultPosition();
     document.addEventListener('keydown', onPinPress);
     window.form.mainPin.addEventListener('mousedown', onPinMousedown);
-    window.pin.clear();
+    window.form.ad.reset();
+    window.form.filters.reset();
+    window.form.setAddressDisabled();
   };
 
   // Показать карту
   var enablePage = function () {
     window.pin.map.classList.remove('map--faded');
     window.form.ad.classList.remove('ad-form--disabled');
+    window.form.filters.classList.remove('hidden');
     window.form.setAddressEnabled();
     window.form.enableElements(window.form.adFieldsets);
     window.form.enableElements(window.form.filterElements);
@@ -59,7 +68,7 @@
   var closeError = function () {
     document.querySelector('div.error').remove();
     document.removeEventListener('keydown', onErrorEscPress);
-    document.removeEventListener('keydown', onErrorClick);
+    document.removeEventListener('click', onErrorClick);
     document.removeEventListener('click', onErrorButtonClick);
   };
 
@@ -77,6 +86,41 @@
     errorButton.addEventListener('click', onErrorButtonClick);
   };
 
+  // Сообщение успеха
+  var onSuccessEscPress = function (evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      closeSuccess();
+    }
+  };
+
+  var onSuccessClick = function (evt) {
+    if (evt.target === document.querySelector('div.success')) {
+      evt.preventDefault();
+      closeSuccess();
+    }
+  };
+
+  var closeSuccess = function () {
+    document.querySelector('div.success').remove();
+    document.removeEventListener('keydown', onSuccessEscPress);
+    document.removeEventListener('click', onSuccessClick);
+    disablePage();
+  };
+
+  var showSuccess = function (successMessage) {
+    var successElement = successMessageTemplate.cloneNode(true);
+
+    var messageText = successElement.querySelector('.success__message');
+    messageText.textContent = successMessage;
+
+    document.querySelector('main').appendChild(successMessageTemplate);
+
+    document.addEventListener('keydown', onSuccessEscPress);
+    document.addEventListener('click', onSuccessClick);
+  };
+
+  // События успешной и неуспешной загрузки данных
   var onSuccessLoad = function (data) {
     window.pin.render(data);
   };
@@ -84,6 +128,23 @@
   var onErrorLoad = function (message) {
     showError(message);
   };
+
+  var onSuccessUpload = function () {
+    showSuccess();
+  };
+
+  var onErrorUpload = function (message) {
+    showError(message);
+  };
+
+  window.form.ad.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(window.form.ad), onSuccessUpload, onErrorUpload);
+  });
+
+  resetFormButton.addEventListener('click', function () {
+    disablePage();
+  });
 
   disablePage();
   window.form.validateRooms();

@@ -139,6 +139,7 @@
     adFieldsets: adFormFieldsets,
     filterElements: filtersFormElements,
     ad: adForm,
+    filters: filtersForm,
     disableElements: disableFormElements,
     enableElements: enableFormElements,
     validateRooms: validateRooms,
