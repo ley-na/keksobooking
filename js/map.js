@@ -123,6 +123,7 @@
   // События успешной и неуспешной загрузки данных
   var onSuccessLoad = function (data) {
     window.pin.render(data);
+    window.offers = data;
   };
 
   var onErrorLoad = function (message) {
