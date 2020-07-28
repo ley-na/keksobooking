@@ -7,10 +7,11 @@
   var OFFERS_MAX_NUM = 5;
 
   var map = document.querySelector('.map');
+  var offerPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+
 
   // Отрисовка метки объявления. Открытие/закрытие объявления.
   var renderOfferPin = function (offerPin) {
-    var offerPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
     var offerPinElement = offerPinTemplate.cloneNode(true);
 
     offerPinElement.querySelector('img').src = offerPin.author.avatar;

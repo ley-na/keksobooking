@@ -5,6 +5,7 @@
   var resetFormButton = window.form.ad.querySelector('.ad-form__reset');
   var errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
   var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
+  var main = document.querySelector('main');
 
   // Спрятать карту
   var disablePage = function () {
@@ -20,6 +21,7 @@
     window.form.ad.reset();
     window.form.filters.reset();
     window.form.setAddressDisabled();
+    window.card.elements.classList.add('hidden');
   };
 
   // Показать карту
@@ -78,7 +80,7 @@
     var messageText = errorElement.querySelector('.error__message');
     messageText.textContent = errorMessage;
 
-    var message = document.querySelector('main').appendChild(errorMessageTemplate);
+    var message = main.appendChild(errorMessageTemplate);
     var errorButton = message.querySelector('.error__button');
 
     document.addEventListener('keydown', onErrorEscPress);
@@ -114,7 +116,7 @@
     var messageText = successElement.querySelector('.success__message');
     messageText.textContent = successMessage;
 
-    document.querySelector('main').appendChild(successMessageTemplate);
+    main.appendChild(successMessageTemplate);
 
     document.addEventListener('keydown', onSuccessEscPress);
     document.addEventListener('click', onSuccessClick);
