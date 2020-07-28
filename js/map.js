@@ -22,6 +22,7 @@
     window.form.filters.reset();
     window.form.setAddressDisabled();
     window.card.elements.classList.add('hidden');
+    window.form.filters.removeEventListener('change', window.filter.onFilterChange);
   };
 
   // Показать карту
@@ -35,6 +36,7 @@
     document.removeEventListener('keydown', onPinPress);
     window.form.mainPin.removeEventListener('mousedown', onPinMousedown);
     window.backend.load(onSuccessLoad, onErrorLoad);
+    window.form.filters.addEventListener('change', window.filter.onFilterChange);
   };
 
   var onPinPress = function (evt) {
@@ -147,6 +149,7 @@
 
   resetFormButton.addEventListener('click', function () {
     disablePage();
+    window.form.validatePrice();
   });
 
   disablePage();
