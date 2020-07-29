@@ -65,6 +65,6 @@
   };
 
   window.filter = {
-    onFilterChange: onFilterChange
+    onChange: onFilterChange
   };
 })();
