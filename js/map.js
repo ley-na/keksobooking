@@ -5,6 +5,7 @@
   var resetFormButton = window.form.ad.querySelector('.ad-form__reset');
   var errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
   var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
+  var main = document.querySelector('main');
 
   // Спрятать карту
   var disablePage = function () {
@@ -20,6 +21,8 @@
     window.form.ad.reset();
     window.form.filters.reset();
     window.form.setAddressDisabled();
+    window.card.elements.classList.add('hidden');
+    window.form.filters.removeEventListener('change', window.filter.onFilterChange);
   };
 
   // Показать карту
@@ -33,10 +36,11 @@
     document.removeEventListener('keydown', onPinPress);
     window.form.mainPin.removeEventListener('mousedown', onPinMousedown);
     window.backend.load(onSuccessLoad, onErrorLoad);
+    window.form.filters.addEventListener('change', window.filter.onFilterChange);
   };
 
-  var onPinPress = function () {
-    if (window.utils.isEscPressed) {
+  var onPinPress = function (evt) {
+    if (window.utils.isEnterPressed(evt)) {
       enablePage();
     }
   };
@@ -48,7 +52,7 @@
   };
 
   var onErrorEscPress = function (evt) {
-    if (window.utils.isEscPressed) {
+    if (window.utils.isEscPressed(evt)) {
       evt.preventDefault();
       closeError();
     }
@@ -78,7 +82,7 @@
     var messageText = errorElement.querySelector('.error__message');
     messageText.textContent = errorMessage;
 
-    var message = document.querySelector('main').appendChild(errorMessageTemplate);
+    var message = main.appendChild(errorMessageTemplate);
     var errorButton = message.querySelector('.error__button');
 
     document.addEventListener('keydown', onErrorEscPress);
@@ -88,7 +92,7 @@
 
   // Сообщение успеха
   var onSuccessEscPress = function (evt) {
-    if (evt.key === 'Escape') {
+    if (window.utils.isEscPressed(evt)) {
       evt.preventDefault();
       closeSuccess();
     }
@@ -114,7 +118,7 @@
     var messageText = successElement.querySelector('.success__message');
     messageText.textContent = successMessage;
 
-    document.querySelector('main').appendChild(successMessageTemplate);
+    main.appendChild(successMessageTemplate);
 
     document.addEventListener('keydown', onSuccessEscPress);
     document.addEventListener('click', onSuccessClick);
@@ -123,6 +127,7 @@
   // События успешной и неуспешной загрузки данных
   var onSuccessLoad = function (data) {
     window.pin.render(data);
+    window.offers = data;
   };
 
   var onErrorLoad = function (message) {
@@ -144,6 +149,7 @@
 
   resetFormButton.addEventListener('click', function () {
     disablePage();
+    window.form.validatePrice();
   });
 
   disablePage();

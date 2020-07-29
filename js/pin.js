@@ -4,12 +4,14 @@
 
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
+  var OFFERS_MAX_NUM = 5;
 
   var map = document.querySelector('.map');
+  var offerPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+
 
   // Отрисовка метки объявления. Открытие/закрытие объявления.
   var renderOfferPin = function (offerPin) {
-    var offerPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
     var offerPinElement = offerPinTemplate.cloneNode(true);
 
     offerPinElement.querySelector('img').src = offerPin.author.avatar;
@@ -18,7 +20,7 @@
     offerPinElement.style.top = offerPin.location.y - PIN_HEIGHT + 'px';
 
     var onCardEscPress = function (evt) {
-      if (window.utils.isEscPressed) {
+      if (window.utils.isEscPressed(evt)) {
         evt.preventDefault();
         closeOfferCard();
       }
@@ -48,8 +50,8 @@
         openOfferCard();
       });
 
-      offerPinElement.addEventListener('keydown', function () {
-        if (window.utils.isEnterPressed) {
+      offerPinElement.addEventListener('keydown', function (evt) {
+        if (window.utils.isEnterPressed(evt)) {
           openOfferCard();
         }
       });
@@ -62,9 +64,10 @@
 
   // Добавление метки в разметку
   var renderOfferPins = function (offers) {
+    clearPins();
     var mapPins = map.querySelector('.map__pins');
     var fragment = document.createDocumentFragment();
-    offers.forEach(function (offer) {
+    offers.slice(0, OFFERS_MAX_NUM).forEach(function (offer) {
       fragment.appendChild(renderOfferPin(offer));
     });
     mapPins.appendChild(fragment);

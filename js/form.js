@@ -89,9 +89,9 @@
     var roomsCount = roomsSelect.value;
 
     if (capacityRoomsError[roomsCount].guests.includes(guestsCount)) {
-      roomsSelect.setCustomValidity('');
+      capacitySelect.setCustomValidity('');
     } else {
-      roomsSelect.setCustomValidity(capacityRoomsError[roomsCount].errorText);
+      capacitySelect.setCustomValidity(capacityRoomsError[roomsCount].errorText);
     }
   };
 
